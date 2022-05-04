@@ -1,8 +1,6 @@
 import { galleryItems } from "./gallery-items.js";
 // Change code below this line
 
-// console.log(galleryItems);
-
 const gallery = document.querySelector(".gallery");
 
 const gridPic = galleryItems
@@ -21,21 +19,26 @@ const gridPic = galleryItems
   )
   .join("");
 
-gallery.addEventListener("click", (event) => {
+gallery.addEventListener("click", onGalleryClick);
+
+function onGalleryClick(event) {
   event.preventDefault();
-  //   console.log(event.target);
-  //   console.dir(event.target);
+
   const instance = basicLightbox.create(`
       <img
         src="${event.target.dataset.source}"
-        alt="${gridPic.description}"
         width="800" height="600"
       />`);
 
   instance.show();
-});
 
-// const instance = basicLightbox.create(document.querySelector(".data-source"));
+  if (instance.show.name === "show") {
+    document.addEventListener("keydown", (eve) => {
+      if (eve.code === "Escape") {
+        return instance.close();
+      }
+    });
+  }
+}
 
 gallery.insertAdjacentHTML("beforeend", gridPic);
-// console.log(gridPic);
