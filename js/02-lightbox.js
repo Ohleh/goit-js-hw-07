@@ -5,37 +5,37 @@ import { galleryItems } from "./gallery-items.js";
 
 const gallery = document.querySelector(".gallery");
 
-const gridPic = galleryItems.map((element) => {
-  let gridPicA = document.createElement("a");
-  gridPicA.classList.add("gallery__item");
-  gridPicA.setAttribute("href", element.original);
+// const gridPic = galleryItems.map((element) => {
+//   let gridPicA = document.createElement("a");
+//   gridPicA.classList.add("gallery__item");
+//   gridPicA.setAttribute("href", element.original);
 
-  let gridPicImg = document.createElement("img");
-  gridPicImg.classList.add("gallery__image");
-  gridPicImg.setAttribute("src", element.preview);
-  gridPicImg.setAttribute("alt", element.description);
+//   let gridPicImg = document.createElement("img");
+//   gridPicImg.classList.add("gallery__image");
+//   gridPicImg.setAttribute("src", element.preview);
+//   gridPicImg.setAttribute("alt", element.description);
 
-  gridPicA.appendChild(gridPicImg);
-  gallery.appendChild(gridPicA);
-});
-
-gallery.addEventListener("click", onGalleryClick);
-
-function onGalleryClick(event) {
-  event.preventDefault();
-  var lightbox = new SimpleLightbox(".gallery a", {
-    /* options */
-    captionsData: "alt",
-    captionDelay: 250,
-  });
-}
-//
-//
-console.log(gallery);
-//
-//
-//
-// let gallery = new SimpleLightbox(".gallery a");
-// gallery.on("show.simplelightbox", function () {
-//   // do something…
+//   gridPicA.appendChild(gridPicImg);
+//   gallery.appendChild(gridPicA);
 // });
+//
+
+const gridPic = galleryItems
+  .map(
+    (element) =>
+      `<a class="gallery__item" href="${element.original}">
+      <img class="gallery__image"
+       src="${element.preview}" 
+       alt="${element.description}" />
+       </a>`
+  )
+  .join("");
+
+gallery.insertAdjacentHTML("beforeend", gridPic);
+console.log(gridPic);
+
+const lightbox = new SimpleLightbox(".gallery a", {
+  /* options */
+  captionsData: "alt",
+  captionDelay: 250,
+});
