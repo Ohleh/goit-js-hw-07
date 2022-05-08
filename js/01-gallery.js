@@ -23,17 +23,25 @@ gallery.addEventListener("click", onGalleryClick);
 
 function onGalleryClick(event) {
   event.preventDefault();
+  if (event.target.nodeName === "DIV") {
+    return;
+  }
 
-  const instance = basicLightbox.create(`
+  const instance = basicLightbox.create(
+    `
       <img
         src="${event.target.dataset.source}"
         width="800" height="600"
-      />`);
+      />`,
+    {
+      closable: true,
+    }
+  );
 
   instance.show();
 
-  if (instance.show.name === "show") {
-    document.addEventListener("keydown", (eve) => {
+  if (instance.show()) {
+    window.addEventListener("keydown", (eve) => {
       if (eve.code === "Escape") {
         return instance.close();
       }
